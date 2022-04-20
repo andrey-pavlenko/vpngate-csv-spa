@@ -1,0 +1,27 @@
+{
+  "name": "vpngate-csv-spa",
+  "version": "0.0.1",
+  "description": "Getting the settings file from the site vpngate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrey-pavlenko/vpngate-csv-spa.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrey-pavlenko/vpngate-csv-spa/issues"
+  },
+  "homepage": "https://github.com/andrey-pavlenko/vpngate-csv-spa#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.20.0",
+    "@typescript-eslint/parser": "^5.20.0",
+    "eslint": "^8.13.0",
+    "prettier": "^2.6.2",
+    "typescript": "^4.6.3"
+  }
+}
