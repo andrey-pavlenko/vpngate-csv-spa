@@ -1,0 +1,17 @@
+###
+
+GET / HTTP/1.1
+Host: localhost:3000
+
+###
+
+GET /_data HTTP/1.1
+Host: localhost:3000
+
+###
+
+GET /api/iphone/ HTTP/1.1
+Host: www.vpngate.net
+
+###
+Cookie: sid=AF5F1E2B82EE

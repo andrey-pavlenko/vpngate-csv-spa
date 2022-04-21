@@ -1,3 +1,4 @@
+import './main.css';
 import Application from './Application.svelte';
 
 const app = new Application({

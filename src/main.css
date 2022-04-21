@@ -1,3 +1,12 @@
 @import 'tailwindcss/base.css';
 @import 'tailwindcss/components.css';
 @import 'tailwindcss/utilities.css';
+
+@import './styles/form.css';
+
+@layer base {
+  div,
+  span {
+    max-height: 999999px;
+  }
+}
