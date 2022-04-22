@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import { csv, getEmojiFlag } from '../../utils';
+import { getEmojiFlag } from '../../utils';
 
 export interface VGateServer {
   host: string;
@@ -19,7 +19,62 @@ export interface VGateServer {
   configBase64: string;
 }
 
-const url = '/_data';
+// const url = '/_data.json';
+const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
+  'http://www.vpngate.net/api/iphone/'
+)}`;
+
+interface UrlResponse {
+  contents: string;
+  url: string;
+  content_type: string;
+  content_length: null;
+  http_code: number;
+  response_time: number;
+}
+
+async function requestData(): Promise<string> {
+  const rs = await fetch(url, {
+    method: 'GET',
+    mode: 'cors',
+    headers: { Accept: 'application/json' }
+  });
+  if (rs.status >= 400) {
+    const text = await rs.text();
+    throw new Error(`${rs.status}: ${text || rs.statusText}`);
+  }
+  const json: UrlResponse = await rs.json();
+  if (json.http_code >= 400) {
+    throw new Error(`Request ${json.url} failed with code ${json.http_code}`);
+  }
+  return json.contents;
+}
+
+function parseCsv(data: string): { keys: string[]; rows: Record<string, string>[] } {
+  if (!data) {
+    throw new Error('CSV data is empty');
+  }
+  const lines = data.replace(/\*([^*]+)\*/, '$1').split(/[\r\n]+/);
+  if (lines[0].startsWith('vpn_servers')) {
+    lines.shift();
+  }
+
+  const keys = lines[0].split(',');
+  lines.shift();
+
+  const parseLine = (line: string) => {
+    if (line) {
+      return line.split(',').reduce((a, val, i) => {
+        a[keys[i]] = val;
+        return a;
+      }, {});
+    }
+  };
+  const rows = lines.map(parseLine).filter((i) => !!i);
+
+  return { keys, rows };
+}
+
 const requiredKeys = [
   '#HostName',
   'IP',
@@ -38,12 +93,12 @@ const requiredKeys = [
 ];
 
 export async function load(): Promise<VGateServer[]> {
-  const _csv = (await new csv.Csv().fetch(url)).parse();
-  const missingKeys = requiredKeys.filter((k) => !_csv.keys.includes(k));
+  const csv = parseCsv(await requestData());
+  const missingKeys = requiredKeys.filter((k) => !csv.keys.includes(k));
   if (missingKeys.length > 0) {
     throw new Error(`Missing requred fields: ${missingKeys.join(', ')}`);
   }
-  return _csv.rows.map((r) => ({
+  return csv.rows.map((r) => ({
     host: r['#HostName'],
     ip: r.IP,
     score: +r.Score,

@@ -1,10 +1,11 @@
-###
+// documentation: https://httpyac.github.io/guide/installation_cli.html#arguments
 
+
+###
 GET / HTTP/1.1
 Host: localhost:3000
 
 ###
-
 GET /_data HTTP/1.1
 Host: localhost:3000
 
@@ -13,5 +14,18 @@ Host: localhost:3000
 GET /api/iphone/ HTTP/1.1
 Host: www.vpngate.net
 
+// https://allorigins.win/
+/*
+fetch(`https://api.allorigins.win/get?url=${encodeURIComponent('http://www.vpngate.net/api/iphone/')}`)
+.then(response => {
+	if (response.ok) return response.json()
+	throw new Error('Network response was not ok.')
+})
+.then(data => console.log(data.contents));
+*/
+
 ###
-Cookie: sid=AF5F1E2B82EE
+@api=http://www.vpngate.net/api/ipho_ne/
+
+GET /get?url={{api}} HTTP/1.1
+Host: api.allorigins.win

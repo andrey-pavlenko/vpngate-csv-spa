@@ -19,7 +19,9 @@
     const config = atob(server.configBase64 || '');
     const fileNamme = downloadFileName || server.host + downloadFileExtension;
 
-    const blob = new Blob([config]);
+    const blob = new Blob([config], {
+      type: 'application/x-binary'
+    });
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = URL.createObjectURL(blob);
