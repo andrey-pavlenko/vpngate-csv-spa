@@ -35,6 +35,6 @@
     })}"
     on:click={handleClear}
   >
-    <use href="/icons.svg#clear-inverse" />
+    <use href="./icons.svg#clear-inverse" />
   </svg>
 </div>
