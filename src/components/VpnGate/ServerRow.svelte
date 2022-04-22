@@ -114,7 +114,7 @@
       )}
       on:click={hadleDowndloadClick}
     >
-      <use href="/icons.svg#download" />
+      <use href="./icons.svg#download" />
     </svg>
   </div>
 </div>
