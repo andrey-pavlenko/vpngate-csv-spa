@@ -1,6 +1,6 @@
 {
   "name": "vpngate-csv-spa",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Getting the settings file from the site vpngate",
   "main": "index.js",
   "type": "module",
